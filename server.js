@@ -3,6 +3,10 @@
 // Load array of notes
 const data = require('./db/notes');
 
+// Simple In-Memory Database
+const simDB = require('./db/simDB');  // <<== add this
+const notes = simDB.initialize(data); // <<== and this
+
 console.log('Hello Noteful!');
 
 // INSERT EXPRESS APP CODE HERE...
@@ -17,17 +21,28 @@ const app = express();
 app.use(requestLogger);
 
 app.use(express.static('public'));
+//Old
+// app.get('/api/notes', (req, res) => {
+//   const searchTerm = req.query.searchTerm;
 
-app.get('/api/notes', (req, res) => {
-  const searchTerm = req.query.searchTerm;
-
-  if (searchTerm) {
-    res.json(data.filter(item => item.title.includes(searchTerm)));
-  }
-  else {
-    res.json(data);
-  }
+//   if (searchTerm) {
+//     res.json(data.filter(item => item.title.includes(searchTerm)));
+//   }
+//   else {
+//     res.json(data);
+//   }
   
+// });
+
+app.get('/api/notes', (req, res, next) => {
+  const { searchTerm } = req.query;
+
+  notes.filter(searchTerm, (err, list) => {
+    if (err) {
+      return next(err); // goes to error handler
+    }
+    res.json(list); // responds with filtered array
+  });
 });
 
 app.get('/api/notes/:id', (req, res) => {
