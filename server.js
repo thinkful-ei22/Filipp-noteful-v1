@@ -5,12 +5,16 @@ const data = require('./db/notes');
 
 console.log('Hello Noteful!');
 
-const { PORT } = require('./config');
-
 // INSERT EXPRESS APP CODE HERE...
 const express = require('express');
 
+const { PORT } = require('./config');
+
+const {requestLogger} = require('./middleware/logger');
+
 const app = express();
+
+app.use(requestLogger);
 
 app.use(express.static('public'));
 
