@@ -16,11 +16,17 @@ const { PORT } = require('./config');
 
 const {requestLogger} = require('./middleware/logger');
 
+//Create an Express Application
 const app = express();
 
+//Log all requests
 app.use(requestLogger);
 
+//Create a static webserver
 app.use(express.static('public'));
+
+//Parse request body
+app.use(express.json());
 
 app.get('/api/notes', (req, res, next) => {
   const { searchTerm } = req.query;
@@ -41,6 +47,31 @@ app.get('/api/notes/:id', (req, res, next) => {
       return next(err);
     }
     res.json(item);
+  });
+});
+
+app.put('/api/notes/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  /***** Never trust users - validate input *****/
+  const updateObj = {};
+  const updateFields = ['title', 'content'];
+
+  updateFields.forEach(field => {
+    if (field in req.body) {
+      updateObj[field] = req.body[field];
+    }
+  });
+
+  notes.update(id, updateObj, (err, item) => {
+    if (err) {
+      return next(err);
+    }
+    if (item) {
+      res.json(item);
+    } else {
+      next();
+    }
   });
 });
 
