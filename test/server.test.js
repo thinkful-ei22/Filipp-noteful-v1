@@ -200,21 +200,20 @@ describe('Noteful', function () {
         });
     });
     
-    // Figure out later
-    // it('should return an object with a message property "Missing title in request body" when missing "title" field', function() {
-    //   const updateData = {
-    //     'content': 'Best Content Ever'
-    //   };
-    //   return chai.request(app)
-    //     .put('/api/notes/1005')
-    //     .send(updateData)
-    //     .then(function (res) {
-    //       expect(res).to.have.status(400);
-    //       expect(res).to.be.json;
-    //       expect(res.body).to.be.a('object');
-    //       expect(res.body.message).to.equal('Missing `title` in request body');
-    //     });
-    // });
+    it('should return an object with a message property "Missing title in request body" when missing "title" field', function() {
+      const updateData = {
+        'content': 'Best Content Ever'
+      };
+      return chai.request(app)
+        .put('/api/notes/1005')
+        .send(updateData)
+        .then(function (res) {
+          expect(res).to.have.status(400);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('Missing `title` in request body');
+        });
+    });
 
 
 
