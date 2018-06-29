@@ -199,7 +199,8 @@ describe('Noteful', function () {
           expect(res).to.have.status(404);
         });
     });
-
+    
+    // Figure out later
     // it('should return an object with a message property "Missing title in request body" when missing "title" field', function() {
     //   const updateData = {
     //     'content': 'Best Content Ever'
@@ -208,7 +209,6 @@ describe('Noteful', function () {
     //     .put('/api/notes/1005')
     //     .send(updateData)
     //     .then(function (res) {
-    //                                 Wrong status?
     //       expect(res).to.have.status(400);
     //       expect(res).to.be.json;
     //       expect(res.body).to.be.a('object');
