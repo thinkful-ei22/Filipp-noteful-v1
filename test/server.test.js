@@ -208,6 +208,7 @@ describe('Noteful', function () {
     //     .put('/api/notes/1005')
     //     .send(updateData)
     //     .then(function (res) {
+    //                                 Wrong status?
     //       expect(res).to.have.status(400);
     //       expect(res).to.be.json;
     //       expect(res.body).to.be.a('object');
